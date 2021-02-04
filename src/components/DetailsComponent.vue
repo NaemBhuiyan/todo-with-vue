@@ -30,7 +30,7 @@
           <v-icon>mdi-book</v-icon>
         </v-btn>
 
-        <v-btn>
+        <v-btn to="/country">
           <span>Image</span>
 
           <v-icon>mdi-image</v-icon>
@@ -68,7 +68,7 @@ export default {
         default:
           return "blue-grey";
       }
-    }
-  }
+    },
+  },
 };
 </script>
