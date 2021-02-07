@@ -14,8 +14,13 @@
       </v-col>
     </v-row>
 
-    <div v-for="country in countries" v-bind:key="country.name">
-      <v-card class="mx-auto mb-5" max-width="400" v-if="country">
+    <div v-if="countries.length">
+      <v-card
+        class="mx-auto mb-5"
+        max-width="400"
+        v-for="country in countries"
+        v-bind:key="country.name"
+      >
         <v-img class="white--text align-end" height="200px" :src="country.flag">
         </v-img>
         <v-card-title class="light-blue">
@@ -27,6 +32,10 @@
             Population: {{ new Intl.NumberFormat().format(country.population) }}
           </p>
           <p class="font-weight-black">Region: {{ country.region }}</p>
+          <p class="font-weight-black">
+            Present Time:
+            {{ calcTime(country.timezones[0].slice(3).replace(":", ".")) }}
+          </p>
         </v-card-text>
       </v-card>
     </div>
@@ -60,6 +69,23 @@ export default {
         country.name.toLowerCase().includes(name)
       );
       this.name = "";
+    },
+    calcTime(offset) {
+      console.log(offset);
+      // create Date object for current location
+      var d = new Date();
+
+      // convert to msec
+      // subtract local time zone offset
+      // get UTC time in msec
+      var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+
+      // create new Date object for different city
+      // using supplied offset
+      var nd = new Date(utc + 3600000 * offset);
+
+      // return time as a string
+      return nd.toLocaleString();
     },
   },
   computed: {
